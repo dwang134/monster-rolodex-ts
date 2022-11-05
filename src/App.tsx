@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Monster} from '../types/Monster'
+import {User} from '../types/Monster'
 
 const App:React.FC= () =>  {
   
@@ -24,12 +24,25 @@ const App:React.FC= () =>  {
       }
     ]
 
-  const [monsters, setMonsters] = useState<Monster []>(monsterArray);
+  const [monsters, setMonsters] = useState<User []>([]);
 
- useEffect(()=> {
-  console.log(monsters);
- })
+    useEffect(()=> {
+      getUserData();
+    }, [])
 
+
+    const getUserData = async() => {
+      const res = await fetch('https://jsonplaceholder.typicode.com/users');
+      const data = await res.json();
+      setMonsters(data);
+    }
+
+
+    // componentDidMount(
+    //   const res = await fetch('https://jsonplaceholder.typicode.com/users');
+    //   const data = res.json();
+      
+    // );
 
   return (
     <div className="App">
@@ -37,7 +50,7 @@ const App:React.FC= () =>  {
         <img src={logo} className="App-logo" alt="logo" />
         <div>
         {monsters.map((monster, index)=> {
-          <p>{monster.name}</p>
+          return <p key= {monster.name}>{monster.name}</p>
         })}
         </div>
       {/* <button onClick={()=> setMonster1({name: 'Name Changed'})}>Change name</button> */}
