@@ -1,22 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {User} from '../types/Monster'
+import {User} from '../types/User'
 import { isConstructorDeclaration } from 'typescript';
 
 const App:React.FC= () =>  {
   
-    const monsterArray= [
-      {
-        name: 'Monster 1'
-      },
-      {
-        name: 'Monster 2'
-      },
-      {
-        name: 'Monster 3'
-      }
-    ]
 
   const [monsters, setMonsters] = useState<User []>([]);
 
@@ -33,9 +22,15 @@ const App:React.FC= () =>  {
       setMonsters(data);
     }
 
+    const filterMonster = (value: string):void => {
+      const targetValue = value.toLowerCase();
+      const filteredMonster = monsters.filter((monster) => monster.name.toLowerCase().includes(targetValue));
+      setMonsters(filteredMonster);
+    }
+
   return (
     <div className="App">
-        <input className= 'search-box' type= 'search' placeholder= 'search monsters' onChange={(e)=> {console.log(e.target.value)}}/>
+        <input className= 'search-box' type= 'search' placeholder= 'search monsters' onChange={(e)=> {filterMonster(e.target.value)}}/>
         <div>
         {monsters.map((monster, index)=> {
           return <p key= {monster.name}>{monster.name}</p>
