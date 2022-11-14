@@ -8,6 +8,7 @@ const App:React.FC= () =>  {
   
 
   const [monsters, setMonsters] = useState<User []>([]);
+  const [filteredMonsters, setFilteredMonsters] = useState<User []>(monsters);
 
     useEffect(()=> {
       console.log("UseEffect is called");
@@ -18,21 +19,21 @@ const App:React.FC= () =>  {
     const getUserData = async() => {
       const res = await fetch('https://jsonplaceholder.typicode.com/users');
       const data = await res.json();
-      console.log(data);
       setMonsters(data);
+      setFilteredMonsters(data);
     }
 
     const filterMonster = (value: string):void => {
       const targetValue = value.toLowerCase();
-      const filteredMonster = monsters.filter((monster) => monster.name.toLowerCase().includes(targetValue));
-      setMonsters(filteredMonster);
+      const filteredData = monsters.filter((monster) => monster.name.toLowerCase().includes(targetValue));
+      setFilteredMonsters(filteredData);
     }
 
   return (
     <div className="App">
         <input className= 'search-box' type= 'search' placeholder= 'search monsters' onChange={(e)=> {filterMonster(e.target.value)}}/>
         <div>
-        {monsters.map((monster, index)=> {
+        {filteredMonsters.map((monster, index)=> {
           return <p key= {monster.name}>{monster.name}</p>
         })}
         </div>

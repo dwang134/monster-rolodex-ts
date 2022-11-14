@@ -1,9 +1,3 @@
-
-//prototyping for Monster object
-// export type Monster = {
-//     name: string
-// }
-
 export type User = {
     id: number,
     name: string,
