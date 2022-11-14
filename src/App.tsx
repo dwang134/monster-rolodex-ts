@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import logo from './logo.svg';
 import './App.css';
-import {User} from '../types/User'
-import { isConstructorDeclaration } from 'typescript';
+import {User} from '../types/User';
+import CardList from './components/cardlist/CardList';
+import Searchbox from './components/searchbox/Searchbox';
+
 
 const App:React.FC= () =>  {
   
 
-  const [monsters, setMonsters] = useState<User []>([]);
-  const [filteredMonsters, setFilteredMonsters] = useState<User []>(monsters);
+  const [monsterData, setMonsterData] = useState<User []>([]);
+  const [filteredMonsters, setFilteredMonsters] = useState<User []>([]);
 
     useEffect(()=> {
       console.log("UseEffect is called");
@@ -19,25 +20,23 @@ const App:React.FC= () =>  {
     const getUserData = async() => {
       const res = await fetch('https://jsonplaceholder.typicode.com/users');
       const data = await res.json();
-      setMonsters(data);
+      console.log(data);
+      setMonsterData(data);  
       setFilteredMonsters(data);
     }
 
     const filterMonster = (value: string):void => {
       const targetValue = value.toLowerCase();
-      const filteredData = monsters.filter((monster) => monster.name.toLowerCase().includes(targetValue));
+      const filteredData = monsterData.filter((monster) => monster.name.toLowerCase().includes(targetValue));
       setFilteredMonsters(filteredData);
     }
 
   return (
     <div className="App">
-        <input className= 'search-box' type= 'search' placeholder= 'search monsters' onChange={(e)=> {filterMonster(e.target.value)}}/>
+        <Searchbox filterMonster= {filterMonster}/>
         <div>
-        {filteredMonsters.map((monster, index)=> {
-          return <p key= {monster.name}>{monster.name}</p>
-        })}
+        <CardList monsters= {filteredMonsters} />
         </div>
-      {/* <button onClick={()=> setMonster1({name: 'Name Changed'})}>Change name</button> */}
     </div>
   )
 }
