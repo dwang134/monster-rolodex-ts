@@ -1,5 +1,5 @@
 import React from 'react';
-import {User} from '../../../types/User'
+import './Searchbox.css'
 
 interface Props{
     filterMonster: (value: string) => void

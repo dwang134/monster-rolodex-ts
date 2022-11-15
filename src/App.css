@@ -15,3 +15,9 @@ body {
   color: #fff;
   margin-top: 2em;
 }
+
+.app-title{
+  margin: 2em 0em;
+  font-size: 3em;
+  color: #fff;
+}

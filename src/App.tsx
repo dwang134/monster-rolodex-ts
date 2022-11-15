@@ -33,6 +33,7 @@ const App:React.FC= () =>  {
 
   return (
     <div className="App">
+        <h1 className= "app-title">Monster rolodex</h1>
         <Searchbox filterMonster= {filterMonster}/>
         <div>
         <CardList monsters= {filteredMonsters} />
